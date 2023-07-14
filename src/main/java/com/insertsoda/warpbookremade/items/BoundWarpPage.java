@@ -69,6 +69,7 @@ public class BoundWarpPage extends Item {
             Identifier worldIdentifier = new Identifier(boundWorld);
             ServerWorld destinationWorld = user.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, worldIdentifier));
             user.teleport(destinationWorld,posX,posY,posZ, PositionFlag.VALUES, user.getYaw(), user.getPitch());
+
             user.emitGameEvent(GameEvent.TELEPORT); // Thought this was important to have it here, if there's a reason to not have this here, you're free to remove it
         }
 

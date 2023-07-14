@@ -1,7 +1,8 @@
 package com.insertsoda.warpbookremade;
 
-import com.insertsoda.warpbookremade.networking.RegisterHandlers;
+import com.insertsoda.warpbookremade.networking.PacketReceivers;
 import com.insertsoda.warpbookremade.items.ModItems;
+import com.insertsoda.warpbookremade.screenhandlers.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -14,7 +15,8 @@ public class WarpBookRemade implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModItems.registerItems();
-		RegisterHandlers.register();
+		ModItems.register();
+		ModScreenHandlers.register();
+		PacketReceivers.register();
 	}
 }

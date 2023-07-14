@@ -12,7 +12,7 @@
 		"sources": "https://github.com/insertsoda/warp-book-remade",
 		"issues": "https://github.com/insertsoda/warp-book-remade/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/warp-book-remade/icon.png",
 	"environment": "*",
 	"entrypoints": {

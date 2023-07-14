@@ -37,7 +37,9 @@ public class WarpBook extends Item {
         }
         // Passing the hand as well to verify that the user clicked on a real warp on the server, instead of a forged one
         // No idea if Minecraft has something to prevent that built-in, but I'll keep it in
-        user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand));
+        if(!world.isClient()){
+            user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand));
+        }
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 

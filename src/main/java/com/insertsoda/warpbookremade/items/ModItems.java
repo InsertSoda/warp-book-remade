@@ -22,7 +22,7 @@ public class ModItems {
         entries.add(BOUND_WARP_PAGE);
         entries.add(WARP_BOOK);
     }
-    public static void  registerItems(){
+    public static void  register(){
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ModItems::addItemsToTabItemGroup);
     }
 

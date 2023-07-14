@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.event.GameEvent;
 
-import java.util.Objects;
-
-public class RegisterHandlers {
+public class PacketReceivers {
 
     public static void register(){
         ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME_ID, (server, player, handler, buffer, packetSender) -> {

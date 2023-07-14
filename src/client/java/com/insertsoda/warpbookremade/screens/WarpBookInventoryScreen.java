@@ -1,12 +1,16 @@
 package com.insertsoda.warpbookremade.screens;
 
 import com.insertsoda.warpbookremade.screenhandlers.WarpBookInventoryScreenHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class WarpBookInventoryScreen extends HandledScreen<WarpBookInventoryScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("textures/gui/container/generic_54.png");
 
