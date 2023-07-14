@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "warp-book-remade:item/bound_warp_page"
+    }
+}

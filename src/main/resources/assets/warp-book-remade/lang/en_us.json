@@ -1,0 +1,14 @@
+{
+  "item.warp-book-remade.warp_page": "Warp Page",
+  "item.warp-book-remade.unbound_warp_page": "Unbound Warp Page",
+  "item.warp-book-remade.bound_warp_page": "Bound Warp Page",
+  "item.warp-book-remade.warp_book": "Warp Book",
+  "item.warp-book-remade.warp_book.tooltip.amount_of_pages": "%s/%s Pages",
+  "item.warp_page-remade.bound_warp_page.tooltip.bound_with": "This warp page is bound with:",
+  "item.warp_page-remade.bound_warp_page.tooltip.bound_without_nbt": "This bound warp page isn't bound with a position and will not work.",
+  "item.warp_page-remade.bound_warp_page.tooltip.bound_without_nbt_line_2": "Use an unbound warp page instead.",
+  "item.warp-book-remade.unbound_warp_page.tooltip": "Right click to bind the warp page with your current position.",
+  "screen.warp-book-remade.name_warp_page_screen.input_placeholder": "Enter the warp page's name here",
+  "screen.warp-book-remade.name_warp_page_screen.title": "Name Warp Page",
+  "screen.warp-book-remade.warp_book_page_selection_screen.title": "Select warp"
+}

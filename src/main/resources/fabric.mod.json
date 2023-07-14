@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "warp-book-remade",
+	"version": "${version}",
+	"name": "Warp Book Remade",
+	"description": "A remake of the Warp Book mod for newer versions of Minecraft",
+	"authors": [
+		"InsertSoda"
+	],
+	"contact": {
+		"homepage": "https://insertsoda.com/",
+		"sources": "https://github.com/insertsoda/warp-book-remade",
+		"issues": "https://github.com/insertsoda/warp-book-remade/issues"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/warp-book-remade/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.insertsoda.warpbookremade.WarpBookRemade"
+		],
+		"client": [
+          "com.insertsoda.warpbookremade.WarpBookRemadeClient"
+		]
+	},
+	"mixins": [
+		"warp-book-remade.mixins.json",
+		{
+			"config": "warp-book-remade.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+	}
+}
