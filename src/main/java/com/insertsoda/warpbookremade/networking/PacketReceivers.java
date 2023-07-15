@@ -1,5 +1,6 @@
 package com.insertsoda.warpbookremade.networking;
 
+import com.insertsoda.warpbookremade.functionalities.ModFunctionalities;
 import com.insertsoda.warpbookremade.items.ModItems;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.inventory.Inventories;
@@ -69,35 +70,19 @@ public class PacketReceivers {
 
         ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.USE_WARP_BOOK_PAGE, (server, player, handler, buffer, packetSender) -> {
             Hand hand = buffer.readEnumConstant(Hand.class);
-            int slotId = buffer.readInt();
+            ItemStack stack = player.getStackInHand(hand);
 
-            ItemStack warpBook = player.getStackInHand(hand);
-            DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+            if(stack.getItem() == ModItems.WARP_BOOK){
+                player.getItemCooldownManager().set(stack.getItem(), 10);
 
-            Inventories.readNbt(warpBook.getOrCreateNbt(), pageInventory);
+                int slotId = buffer.readInt();
+                DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+                Inventories.readNbt(stack.getOrCreateNbt(), pageInventory);
 
-            ItemStack stack = pageInventory.get(slotId);
-
-            if(stack.getItem() != ModItems.BOUND_WARP_PAGE){
-                return;
+                stack = pageInventory.get(slotId);
             }
 
-            NbtCompound nbt = stack.getOrCreateNbt();
-
-            double posX = nbt.getDouble("positionX");
-            double posY = nbt.getDouble("positionY");
-            double posZ = nbt.getDouble("positionZ");
-            String boundWorld = nbt.getString("world");
-            if(boundWorld.equals("")){
-                boundWorld = "minecraft:overworld";
-            }
-            Identifier worldIdentifier = new Identifier(boundWorld);
-            ServerWorld destinationWorld = player.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, worldIdentifier));
-            player.teleport(destinationWorld,posX,posY,posZ, PositionFlag.VALUES, player.getYaw(), player.getPitch());
-            player.emitGameEvent(GameEvent.TELEPORT);
-
-            player.getItemCooldownManager().set(warpBook.getItem(), 10);
-            player.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
+            ModFunctionalities.attemptTeleportUsingBoundWarpPageItem(player, stack);
         });
     }
 

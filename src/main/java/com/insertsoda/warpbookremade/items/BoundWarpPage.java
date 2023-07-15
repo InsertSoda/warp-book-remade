@@ -1,5 +1,6 @@
 package com.insertsoda.warpbookremade.items;
 
+import com.insertsoda.warpbookremade.functionalities.ModFunctionalities;
 import com.insertsoda.warpbookremade.screenhandlers.NameWarpPageScreenHandlerFactory;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -57,25 +59,9 @@ public class BoundWarpPage extends Item {
         }
 
 
-        // Checking if the position nbt data is there might be useless, but it prevents crashes from tampering in the player data so yay?
-        if(nbt.contains("positionX") && nbt.contains("positionY") && nbt.contains("positionZ") && !world.isClient){
-            double posX = nbt.getDouble("positionX");
-            double posY = nbt.getDouble("positionY");
-            double posZ = nbt.getDouble("positionZ");
-            String boundWorld = nbt.getString("world");
-            if(boundWorld.equals("")){
-                boundWorld = "minecraft:overworld";
-            }
-            Identifier worldIdentifier = new Identifier(boundWorld);
-            ServerWorld destinationWorld = user.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, worldIdentifier));
-            user.teleport(destinationWorld,posX,posY,posZ, PositionFlag.VALUES, user.getYaw(), user.getPitch());
-
-            user.emitGameEvent(GameEvent.TELEPORT); // Thought this was important to have it here, if there's a reason to not have this here, you're free to remove it
+        if(!world.isClient()){
+            ModFunctionalities.attemptTeleportUsingBoundWarpPageItem((ServerPlayerEntity) user, itemStack);
         }
-
-        user.getItemCooldownManager().set(this, 10);
-        user.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
-
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 
