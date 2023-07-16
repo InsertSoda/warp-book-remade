@@ -8,7 +8,9 @@
   "item.warp_page-remade.bound_warp_page.tooltip.bound_without_nbt": "This bound warp page isn't bound with a position and will not work.",
   "item.warp_page-remade.bound_warp_page.tooltip.bound_without_nbt_line_2": "Use an unbound warp page instead.",
   "item.warp-book-remade.unbound_warp_page.tooltip": "Right click to bind the warp page with your current position.",
-  "screen.warp-book-remade.name_warp_page_screen.input_placeholder": "Enter the warp page's name here",
-  "screen.warp-book-remade.name_warp_page_screen.title": "Name Warp Page",
-  "screen.warp-book-remade.warp_book_page_selection_screen.title": "Select warp"
+  "screen.warp-book-remade.name_warp_page_screen.input_placeholder": "Enter the warp's name here",
+  "screen.warp-book-remade.name_warp_page_screen.title": "Name warp",
+  "screen.warp-book-remade.warp_book_page_selection_screen.title": "Select warp",
+  "screen.warp-book-remade.warp_book_page_selection_screen.no_warps.line_1": "You don't have any warps!",
+  "screen.warp-book-remade.warp_book_page_selection_screen.no_warps.line_2": "Open your warp book's inventory with Shift + Right Click and put a bound warp page in."
 }

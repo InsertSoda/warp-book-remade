@@ -35,7 +35,8 @@ public class ModFunctionalities {
         player.teleport(destinationWorld,posX,posY,posZ, player.getYaw(), player.getPitch());
 
 
-        player.getItemCooldownManager().set(boundWarpPage.getItem(), 10);
+        player.getItemCooldownManager().set(boundWarpPage.getItem(), 20);
+        player.getItemCooldownManager().set(ModItems.WARP_BOOK, 20);
         player.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
     }
 }

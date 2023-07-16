@@ -15,12 +15,15 @@ import net.minecraft.util.collection.DefaultedList;
 
 public class WarpBookInventoryScreenHandlerFactory implements ExtendedScreenHandlerFactory, ImplementedInventory {
 
-    private DefaultedList<ItemStack> items = DefaultedList.ofSize(27, ItemStack.EMPTY);
+    public int rows = 3;
+    private DefaultedList<ItemStack> items;
 
-    private ItemStack warpBookStack;
+    private final ItemStack warpBookStack;
 
     public WarpBookInventoryScreenHandlerFactory(ItemStack warpBookStack){
         this.warpBookStack = warpBookStack;
+
+        this.items = DefaultedList.ofSize(this.rows * 9, ItemStack.EMPTY);
 
         NbtCompound nbt = warpBookStack.getOrCreateNbt();
         Inventories.readNbt(nbt, items);
@@ -33,11 +36,12 @@ public class WarpBookInventoryScreenHandlerFactory implements ExtendedScreenHand
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new WarpBookInventoryScreenHandler(syncId, playerInventory, this, this.warpBookStack);
+        return new WarpBookInventoryScreenHandler(syncId, playerInventory, this, this.warpBookStack, this.rows);
     }
 
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buffer) {
+        buffer.writeInt(this.rows);
         buffer.writeItemStack(warpBookStack);
     }
 

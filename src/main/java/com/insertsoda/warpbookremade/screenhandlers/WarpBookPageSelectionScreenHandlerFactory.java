@@ -15,15 +15,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 
 public class WarpBookPageSelectionScreenHandlerFactory implements ExtendedScreenHandlerFactory, ImplementedInventory {
-    private DefaultedList<ItemStack> items = DefaultedList.ofSize(27, ItemStack.EMPTY);
 
-    private ItemStack warpBookStack;
+    private int rows;
+    private DefaultedList<ItemStack> items;
 
-    private Hand hand;
+    private final ItemStack warpBookStack;
 
-    public WarpBookPageSelectionScreenHandlerFactory(ItemStack warpBookStack, Hand hand){
+    private final Hand hand;
+
+    public WarpBookPageSelectionScreenHandlerFactory(ItemStack warpBookStack, Hand hand, int rows){
         this.warpBookStack = warpBookStack;
         this.hand = hand;
+        this.rows = rows;
+
+        items = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
 
         NbtCompound nbt = warpBookStack.getOrCreateNbt();
         Inventories.readNbt(nbt, items);
@@ -36,12 +41,13 @@ public class WarpBookPageSelectionScreenHandlerFactory implements ExtendedScreen
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new WarpBookPageSelectionScreenHandler(syncId, playerInventory, this.warpBookStack, hand);
+        return new WarpBookPageSelectionScreenHandler(syncId, playerInventory, this.warpBookStack, hand, rows);
     }
 
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buffer) {
         buffer.writeEnumConstant(this.hand);
+        buffer.writeInt(this.rows);
         buffer.writeItemStack(this.warpBookStack);
     }
 

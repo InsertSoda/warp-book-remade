@@ -6,16 +6,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.event.GameEvent;
 
 public class PacketReceivers {
 
@@ -73,11 +65,12 @@ public class PacketReceivers {
             ItemStack stack = player.getStackInHand(hand);
 
             if(stack.getItem() == ModItems.WARP_BOOK){
-                player.getItemCooldownManager().set(stack.getItem(), 10);
+                NbtCompound nbt = stack.getOrCreateNbt();
 
                 int slotId = buffer.readInt();
-                DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
-                Inventories.readNbt(stack.getOrCreateNbt(), pageInventory);
+                int rows = 3;
+                DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
+                Inventories.readNbt(nbt, pageInventory);
 
                 stack = pageInventory.get(slotId);
             }

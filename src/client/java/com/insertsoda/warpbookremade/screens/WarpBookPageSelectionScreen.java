@@ -20,9 +20,11 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class WarpBookPageSelectionScreen extends HandledScreen<ScreenHandler> {
 
-    public Text warpBookName = ((WarpBookPageSelectionScreenHandler) handler).getWarpBookName();
+    private Text warpBookName = ((WarpBookPageSelectionScreenHandler) handler).getWarpBookName();
 
-    public Inventory pageInventory = ((WarpBookPageSelectionScreenHandler) handler).getInventory();
+    private Inventory pageInventory = ((WarpBookPageSelectionScreenHandler) handler).getInventory();
+
+    private int rows = ((WarpBookPageSelectionScreenHandler) handler).getRows();
 
     public WarpBookPageSelectionScreen(ScreenHandler handler, PlayerInventory inventory, Text title){
         super(handler, inventory, Text.translatable("screen.warp-book-remade.warp_book_page_selection_screen.title"));
@@ -33,11 +35,13 @@ public class WarpBookPageSelectionScreen extends HandledScreen<ScreenHandler> {
     private final int marginX = 3;
     private final int marginY = 3;
 
+    private int warpPagesAdded = 0;
+
     @Override
     protected void init(){
-        int warpPagesAdded = 0;
+        warpPagesAdded = 0;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < 9; j++) {
                 int slotId = i * 9 + j;
                 ItemStack boundWarpPage = this.pageInventory.getStack(slotId);
@@ -55,7 +59,8 @@ public class WarpBookPageSelectionScreen extends HandledScreen<ScreenHandler> {
                     }
 
                     int offsetY = warpPagesAdded / 3;
-                    y = (int) (height / 2 - (4.5 - offsetY) * (buttonHeight + marginY));
+                    // The + marginY / 1.5 is there to center the buttons so that the crosshair's center is in the middle of the buttons
+                    y = height / 2 - ((this.rows * 9 / 6) - offsetY) * (buttonHeight + marginY) - buttonHeight / 2;
 
                     NbtCompound nbt = boundWarpPage.getOrCreateNbt();
                     String name = nbt.getString("name");
@@ -91,6 +96,14 @@ public class WarpBookPageSelectionScreen extends HandledScreen<ScreenHandler> {
         int textY = height / 2 - buttonHeight * 4 - 4 * marginY - 20;
         context.drawText(this.textRenderer, this.title, width / 2 - textRenderer.getWidth(this.title) / 2, textY, -1, true);
         context.drawText(this.textRenderer, warpBookName, width / 2 - textRenderer.getWidth(warpBookName) / 2, textY - 10, -1, true);
+
+        if(warpPagesAdded == 0){
+            Text line1 = Text.translatable("screen.warp-book-remade.warp_book_page_selection_screen.no_warps.line_1");
+            context.drawText(this.textRenderer, line1, width / 2 - textRenderer.getWidth(line1) / 2, height / 2 - textRenderer.fontHeight, -1, true);
+            Text line2 = Text.translatable("screen.warp-book-remade.warp_book_page_selection_screen.no_warps.line_2");
+            context.drawText(this.textRenderer, line2, width / 2 - textRenderer.getWidth(line2) / 2, height / 2, -1, true);
+
+        }
     }
 
     @Override

@@ -38,7 +38,7 @@ public class WarpBook extends Item {
         // Passing the hand as well to verify that the user clicked on a real warp on the server, instead of a forged one
         // No idea if Minecraft has something to prevent that built-in, but I'll keep it in
         if(!world.isClient()){
-            user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand));
+            user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand, 3));
         }
         return TypedActionResult.success(user.getStackInHand(hand));
     }
@@ -46,14 +46,15 @@ public class WarpBook extends Item {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+        int rows = 3;
+        DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
         Inventories.readNbt(nbt, pageInventory);
         int amountOfWarpPages = 0;
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < rows * 9; i++) {
             if(pageInventory.get(i).getItem() == ModItems.BOUND_WARP_PAGE){
                 amountOfWarpPages++;
             }
         }
-        tooltip.add(Text.translatable("item.warp-book-remade.warp_book.tooltip.amount_of_pages", amountOfWarpPages, 27));
+        tooltip.add(Text.translatable("item.warp-book-remade.warp_book.tooltip.amount_of_pages", amountOfWarpPages, rows * 9));
     }
 }

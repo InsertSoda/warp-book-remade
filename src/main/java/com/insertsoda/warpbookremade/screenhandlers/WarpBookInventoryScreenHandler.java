@@ -14,7 +14,13 @@ import net.minecraft.screen.slot.Slot;
 public class WarpBookInventoryScreenHandler extends ScreenHandler {
 
 
-    private final Inventory inventory;
+    private Inventory inventory;
+
+    public int getRows() {
+        return rows;
+    }
+
+    private int rows;
 
     public ItemStack getWarpBookStack() {
         return warpBookStack;
@@ -23,25 +29,37 @@ public class WarpBookInventoryScreenHandler extends ScreenHandler {
     private ItemStack warpBookStack;
 
     public WarpBookInventoryScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buffer){
-        this(syncId, playerInventory, new SimpleInventory(27), ItemStack.EMPTY);
-        warpBookStack = buffer.readItemStack();
+        super(ModScreenHandlers.WARP_BOOK_INVENTORY_SCREEN_HANDLER, syncId);
+
+        this.rows = buffer.readInt();
+        this.warpBookStack = buffer.readItemStack();
+
+        this.inventory = new SimpleInventory(this.rows * 9);
+
+        addInventorySlots(playerInventory);
+
     }
 
-    public WarpBookInventoryScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ItemStack warpBookStack) {
+    public WarpBookInventoryScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ItemStack warpBookStack, int rows) {
         super(ModScreenHandlers.WARP_BOOK_INVENTORY_SCREEN_HANDLER, syncId);
         this.inventory = inventory;
         this.warpBookStack = warpBookStack;
+        this.rows = rows;
 
+        addInventorySlots(playerInventory);
+    }
+
+    // Extracting this into a method, since doing this() in the client method won't allow the warp book's inventory size to be properly set
+    public void addInventorySlots(PlayerInventory playerInventory){
         inventory.onOpen(playerInventory.player);
 
-        int rows = 3;
-        int i = (rows - 4) * 18;
+        int i = (this.rows - 4) * 18;
 
         int j;
         int k;
-        for(j = 0; j < rows; ++j) {
+        for(j = 0; j < this.rows; ++j) {
             for(k = 0; k < 9; ++k) {
-                this.addSlot(new WarpBookInventorySlot(inventory, k + j * 9, 8 + k * 18, 18 + j * 18));
+                this.addSlot(new WarpBookInventorySlot(this.inventory, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
         }
 
