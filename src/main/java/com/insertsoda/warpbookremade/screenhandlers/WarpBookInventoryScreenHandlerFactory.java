@@ -1,6 +1,7 @@
 package com.insertsoda.warpbookremade.screenhandlers;
 
 import com.insertsoda.warpbookremade.ImplementedInventory;
+import com.insertsoda.warpbookremade.items.WarpBook;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,13 +16,15 @@ import net.minecraft.util.collection.DefaultedList;
 
 public class WarpBookInventoryScreenHandlerFactory implements ExtendedScreenHandlerFactory, ImplementedInventory {
 
-    public int rows = 3;
+    private int rows;
     private DefaultedList<ItemStack> items;
 
     private final ItemStack warpBookStack;
 
     public WarpBookInventoryScreenHandlerFactory(ItemStack warpBookStack){
         this.warpBookStack = warpBookStack;
+
+        this.rows = ((WarpBook) warpBookStack.getItem()).getRows();
 
         this.items = DefaultedList.ofSize(this.rows * 9, ItemStack.EMPTY);
 

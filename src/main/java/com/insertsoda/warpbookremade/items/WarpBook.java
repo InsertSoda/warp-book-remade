@@ -18,6 +18,10 @@ import java.util.List;
 
 public class WarpBook extends Item {
 
+    public int getRows() {
+        return 1;
+    }
+
     public WarpBook(Settings settings) {
         super(settings);
     }
@@ -27,7 +31,9 @@ public class WarpBook extends Item {
         ItemStack itemStack = user.getStackInHand(hand);
         NbtCompound nbt = itemStack.getOrCreateNbt();
 
-        DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+        int rows = ((WarpBook) itemStack.getItem()).getRows();
+
+        DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
         Inventories.readNbt(nbt, pageInventory);
 
 
@@ -38,7 +44,7 @@ public class WarpBook extends Item {
         // Passing the hand as well to verify that the user clicked on a real warp on the server, instead of a forged one
         // No idea if Minecraft has something to prevent that built-in, but I'll keep it in
         if(!world.isClient()){
-            user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand, 3));
+            user.openHandledScreen(new WarpBookPageSelectionScreenHandlerFactory(itemStack, hand, rows));
         }
         return TypedActionResult.success(user.getStackInHand(hand));
     }
@@ -46,7 +52,7 @@ public class WarpBook extends Item {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        int rows = 3;
+        int rows = ((WarpBook) stack.getItem()).getRows();;
         DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
         Inventories.readNbt(nbt, pageInventory);
         int amountOfWarpPages = 0;
