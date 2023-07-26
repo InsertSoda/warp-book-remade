@@ -2,6 +2,7 @@ package com.insertsoda.warpbookremade.networking;
 
 import com.insertsoda.warpbookremade.functionalities.ModFunctionalities;
 import com.insertsoda.warpbookremade.items.ModItems;
+import com.insertsoda.warpbookremade.items.WarpBook;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
@@ -64,7 +65,7 @@ public class PacketReceivers {
             Hand hand = buffer.readEnumConstant(Hand.class);
             ItemStack stack = player.getStackInHand(hand);
 
-            if(stack.getItem() == ModItems.WARP_BOOK){
+            if(stack.getItem() instanceof WarpBook){
                 NbtCompound nbt = stack.getOrCreateNbt();
 
                 int slotId = buffer.readInt();
