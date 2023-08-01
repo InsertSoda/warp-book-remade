@@ -36,8 +36,9 @@ public class ModFunctionalities {
 
 
         player.getItemCooldownManager().set(ModItems.BOUND_WARP_PAGE, 20);
-        player.getItemCooldownManager().set(ModItems.WARP_BOOK, 20);
-        player.getItemCooldownManager().set(ModItems.REINFORCED_WARP_BOOK, 20);
+        player.getItemCooldownManager().set(ModItems.LEATHER_WARP_BOOK, 20);
+        player.getItemCooldownManager().set(ModItems.IRON_WARP_BOOK, 20);
+        player.getItemCooldownManager().set(ModItems.GOLDEN_WARP_BOOK, 20);
         player.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
     }
 }

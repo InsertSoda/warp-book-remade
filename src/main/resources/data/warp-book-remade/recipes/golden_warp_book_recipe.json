@@ -1,0 +1,23 @@
+{
+  "type": "warp-book-remade:shaped_warp_book_upgrade_recipe",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "W": {
+      "item": "warp-book-remade:iron_warp_book"
+    }
+  },
+  "pattern": [
+    "GBG",
+    "BWB",
+    "GBG"
+  ],
+  "result": {
+    "item": "warp-book-remade:golden_warp_book"
+  }
+}

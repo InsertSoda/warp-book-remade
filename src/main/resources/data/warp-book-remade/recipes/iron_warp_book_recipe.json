@@ -1,0 +1,23 @@
+{
+  "type": "warp-book-remade:shaped_warp_book_upgrade_recipe",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "W": {
+      "item": "warp-book-remade:leather_warp_book"
+    }
+  },
+  "pattern": [
+    "IBI",
+    "BWB",
+    "IBI"
+  ],
+  "result": {
+    "item": "warp-book-remade:iron_warp_book"
+  }
+}
