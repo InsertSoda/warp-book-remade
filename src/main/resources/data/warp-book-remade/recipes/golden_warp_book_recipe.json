@@ -1,5 +1,5 @@
 {
-  "type": "warp-book-remade:shaped_warp_book_upgrade_recipe",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
     "G": {

@@ -2,7 +2,6 @@ package com.insertsoda.warpbookremade;
 
 import com.insertsoda.warpbookremade.networking.PacketReceivers;
 import com.insertsoda.warpbookremade.items.ModItems;
-import com.insertsoda.warpbookremade.recipes.ModRecipes;
 import com.insertsoda.warpbookremade.screenhandlers.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -13,13 +12,10 @@ public class WarpBookRemade implements ModInitializer {
 
 	public static final String MOD_ID = "warp-book-remade";
 
-
-
 	@Override
 	public void onInitialize() {
 		ModItems.register();
 		ModScreenHandlers.register();
 		PacketReceivers.register();
-		ModRecipes.register();
 	}
 }
