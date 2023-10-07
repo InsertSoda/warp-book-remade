@@ -3,6 +3,7 @@ package com.insertsoda.warpbookremade.functionalities;
 import com.insertsoda.warpbookremade.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -32,13 +33,14 @@ public class ModFunctionalities {
         // Complains about the player moving too quickly when the destination is far away
         // But it seems like the Waystones mod is also affected by it and that's a popular mod
         // so I'm not concerned to get that fixed anymore
-        player.teleport(destinationWorld,posX,posY,posZ, player.getYaw(), player.getPitch());
-
+        player.teleport(destinationWorld, posX, posY, posZ, player.getYaw(), player.getPitch());
 
         player.getItemCooldownManager().set(ModItems.BOUND_WARP_PAGE, 20);
         player.getItemCooldownManager().set(ModItems.LEATHER_WARP_BOOK, 20);
         player.getItemCooldownManager().set(ModItems.IRON_WARP_BOOK, 20);
         player.getItemCooldownManager().set(ModItems.GOLDEN_WARP_BOOK, 20);
+
         player.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
+        destinationWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, posX,posY,posZ, 100, 0,0,0,3);
     }
 }
