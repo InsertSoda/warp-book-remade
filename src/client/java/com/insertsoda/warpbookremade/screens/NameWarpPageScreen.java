@@ -89,6 +89,6 @@ public class NameWarpPageScreen extends HandledScreen<ScreenHandler> {
         PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeString(name);
         buffer.writeEnumConstant(hand);
-        ClientPlayNetworking.send(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME_ID, buffer);
+        ClientPlayNetworking.send(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME, buffer);
     }
 }

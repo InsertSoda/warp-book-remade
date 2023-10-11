@@ -13,7 +13,7 @@ import net.minecraft.util.collection.DefaultedList;
 public class PacketReceivers {
 
     public static void register(){
-        ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME_ID, (server, player, handler, buffer, packetSender) -> {
+        ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME, (server, player, handler, buffer, packetSender) -> {
             String name = buffer.readString();
             Hand hand = buffer.readEnumConstant(Hand.class);
 

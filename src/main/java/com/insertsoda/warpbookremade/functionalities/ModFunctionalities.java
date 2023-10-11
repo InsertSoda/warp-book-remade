@@ -30,6 +30,8 @@ public class ModFunctionalities {
         Identifier worldIdentifier = new Identifier(boundWorld);
         ServerWorld destinationWorld = player.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, worldIdentifier));
 
+        player.getServerWorld().spawnParticles(ParticleTypes.SMOKE, player.getX(), player.getY() + 1, player.getZ(), 100,0,0,0,0.1);
+
         // Complains about the player moving too quickly when the destination is far away
         // But it seems like the Waystones mod is also affected by it and that's a popular mod
         // so I'm not concerned to get that fixed anymore
