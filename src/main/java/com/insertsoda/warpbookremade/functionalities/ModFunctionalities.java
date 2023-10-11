@@ -3,6 +3,8 @@ package com.insertsoda.warpbookremade.functionalities;
 import com.insertsoda.warpbookremade.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -42,7 +44,17 @@ public class ModFunctionalities {
         player.getItemCooldownManager().set(ModItems.IRON_WARP_BOOK, 20);
         player.getItemCooldownManager().set(ModItems.GOLDEN_WARP_BOOK, 20);
 
-        player.playSound(SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
-        destinationWorld.spawnParticles(ParticleTypes.REVERSE_PORTAL, posX,posY,posZ, 100, 0,0,0,3);
+        destinationWorld.playSound(null, posX, posY, posZ, SoundEvent.of(new Identifier("minecraft", "entity.enderman.teleport")), SoundCategory.AMBIENT , 1, 1);
+
+        spawnParticlesWithLongDistanceEnabled(destinationWorld, ParticleTypes.REVERSE_PORTAL, posX, posY + 1, posZ, 100, 0,0,0,1);
     }
+
+    public static void spawnParticlesWithLongDistanceEnabled(ServerWorld world, ParticleType particleType, double x, double y, double z, int count,float deltaX, float deltaY, float deltaZ, float speed){
+        ParticleS2CPacket particlesPacket = new ParticleS2CPacket(ParticleTypes.REVERSE_PORTAL, true, x, y, z, deltaX, deltaY, deltaZ, speed, count);
+
+        for (int i = 0; i < world.getPlayers().size(); i++) {
+            world.sendToPlayerIfNearby(world.getPlayers().get(i), false, x, y, z, particlesPacket);
+        }
+    }
+
 }
