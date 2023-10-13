@@ -1,6 +1,7 @@
 package com.insertsoda.warpbookremade.networking;
 
 import com.insertsoda.warpbookremade.functionalities.ModFunctionalities;
+import com.insertsoda.warpbookremade.items.BoundWarpPage;
 import com.insertsoda.warpbookremade.items.ModItems;
 import com.insertsoda.warpbookremade.items.WarpBook;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -16,12 +17,10 @@ public class PacketReceivers {
         ServerPlayNetworking.registerGlobalReceiver(PacketIdentifiers.SUBMIT_WARP_PAGE_NAME, (server, player, handler, buffer, packetSender) -> {
             String name = buffer.readString();
             Hand hand = buffer.readEnumConstant(Hand.class);
+            ItemStack itemStack = player.getStackInHand(hand);
 
             server.execute(() -> {
-
-                ItemStack itemStack = player.getStackInHand(hand);
-
-                if(itemStack.getItem() == ModItems.BOUND_WARP_PAGE && itemStack.hasNbt()){
+                if(itemStack.getItem() instanceof BoundWarpPage && itemStack.hasNbt()){
                     NbtCompound nbt = itemStack.getNbt();
                     nbt.putString("name", name);
                     itemStack.setNbt(nbt);
@@ -56,8 +55,8 @@ public class PacketReceivers {
                     player.getInventory().insertStack(BoundWarpPage);
                 }
 
-                player.getItemCooldownManager().set(itemStack.getItem(), 10);
-                player.getItemCooldownManager().set(BoundWarpPage.getItem(), 10);
+                player.getItemCooldownManager().set(ModItems.UNBOUND_WARP_PAGE, 10);
+                player.getItemCooldownManager().set(ModItems.BOUND_WARP_PAGE, 10);
             });
         });
 
@@ -69,14 +68,24 @@ public class PacketReceivers {
                 NbtCompound nbt = stack.getOrCreateNbt();
 
                 int slotId = buffer.readInt();
-                int rows = 3;
-                DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(rows * 9, ItemStack.EMPTY);
+                int inventorySize = ((WarpBook) stack.getItem()).getRows() * 9;
+
+                // Prevent clients from crashing servers by sending an invalid slotId
+                if(slotId >= inventorySize || slotId < 0){
+                    return;
+                }
+
+                DefaultedList<ItemStack> pageInventory = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
                 Inventories.readNbt(nbt, pageInventory);
 
                 stack = pageInventory.get(slotId);
             }
 
-            ModFunctionalities.attemptTeleportUsingBoundWarpPageItem(player, stack);
+            // "local variables referenced from a lambda expression must be final or effectively final" but why?
+            ItemStack finalStack = stack;
+            server.execute(() ->{
+                ModFunctionalities.attemptTeleportUsingBoundWarpPageItem(player, finalStack);
+            });
         });
     }
 

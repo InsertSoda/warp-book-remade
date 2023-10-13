@@ -1,5 +1,6 @@
 package com.insertsoda.warpbookremade.functionalities;
 
+import com.insertsoda.warpbookremade.items.BoundWarpPage;
 import com.insertsoda.warpbookremade.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -16,7 +17,7 @@ import net.minecraft.util.Identifier;
 
 public class ModFunctionalities {
     public static void attemptTeleportUsingBoundWarpPageItem(ServerPlayerEntity player, ItemStack boundWarpPage){
-        if(boundWarpPage.getItem() != ModItems.BOUND_WARP_PAGE){
+        if(!(boundWarpPage.getItem() instanceof BoundWarpPage)){
             return;
         }
 

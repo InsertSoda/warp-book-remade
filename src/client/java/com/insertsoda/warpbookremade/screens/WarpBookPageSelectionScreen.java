@@ -1,5 +1,6 @@
 package com.insertsoda.warpbookremade.screens;
 
+import com.insertsoda.warpbookremade.items.BoundWarpPage;
 import com.insertsoda.warpbookremade.items.ModItems;
 import com.insertsoda.warpbookremade.networking.PacketIdentifiers;
 import com.insertsoda.warpbookremade.screenhandlers.WarpBookPageSelectionScreenHandler;
@@ -45,7 +46,7 @@ public class WarpBookPageSelectionScreen extends HandledScreen<ScreenHandler> {
             for (int j = 0; j < 9; j++) {
                 int slotId = i * 9 + j;
                 ItemStack boundWarpPage = this.pageInventory.getStack(slotId);
-                if(boundWarpPage.getItem() == ModItems.BOUND_WARP_PAGE && boundWarpPage.hasNbt()){
+                if(boundWarpPage.getItem() instanceof BoundWarpPage && boundWarpPage.hasNbt()){
                     int x;
                     int y;
 
